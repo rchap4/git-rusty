@@ -14,10 +14,10 @@
 // You should have received a copy of the Affero GNU General Public License
 // along with git-rusty.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::collections::HashMap;
 use reqwest::header::HeaderMap;
+use std::collections::HashMap;
 
-// We only build one type of repo at the moment.  
+// We only build one type of repo at the moment.
 pub fn build_repo_params(name: &str) -> HashMap<&str, &str> {
     let mut params = HashMap::new();
     params.insert("private", "true");
@@ -27,42 +27,42 @@ pub fn build_repo_params(name: &str) -> HashMap<&str, &str> {
 }
 
 //Fixme unwrap to Result...
-fn build_header() -> HeaderMap  {
+fn build_header() -> HeaderMap {
     let mut headers = HeaderMap::new();
 
-    headers
-        .insert("User-Agent",
-            std::format!("{}","rust-reqwest/0.11.4").parse().unwrap());
+    headers.insert(
+        "User-Agent",
+        std::format!("{}", "rust-reqwest/0.11.4").parse().unwrap(),
+    );
     headers
 }
 
-pub async fn create_repo(url: &str,
-                username: &str,
-                password: &str,
-                repo_params: HashMap<&str, &str>)
-                -> Result<reqwest::Response, reqwest::Error> {
-
+pub async fn create_repo(
+    url: &str,
+    username: &str,
+    password: &str,
+    repo_params: HashMap<&str, &str>,
+) -> Result<reqwest::Response, reqwest::Error> {
     let res = reqwest::Client::new()
-    .post(url)
-    .headers(build_header())
-    .basic_auth(username, Some(password))
-    .json(&repo_params)
-    .send()
-    .await?;
+        .post(url)
+        .headers(build_header())
+        .basic_auth(username, Some(password))
+        .json(&repo_params)
+        .send()
+        .await?;
     Ok(res)
 }
 
-
-pub async fn get_repo(url: &str,
-                      username: &str,
-                      pw: &str)
-    -> Result<reqwest::Response, reqwest::Error> {
-
+pub async fn get_repo(
+    url: &str,
+    username: &str,
+    pw: &str,
+) -> Result<reqwest::Response, reqwest::Error> {
     let res = reqwest::Client::new()
-    .get(url)
-    .headers(build_header())
-    .basic_auth(username,Some(pw))
-    .send()
-    .await;
+        .get(url)
+        .headers(build_header())
+        .basic_auth(username, Some(pw))
+        .send()
+        .await;
     res
 }
