@@ -10,5 +10,5 @@ edition = "2018"
 git2 = "0.17.1"
 structopt = {version = "0.3.22", default-features = false }
 reqwest = { version = "0.11.4", features = ["blocking","json"] }
-tokio = { version = "1.8.1", features = ["macros","rt-multi-thread"] }
+tokio = { version = "1.16.1", features = ["macros","rt-multi-thread"] }
 #rpassword = "5.0.1"
